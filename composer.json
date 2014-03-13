@@ -22,7 +22,8 @@
     "minimum-stability": "dev",
     "require": {
         "php": ">=5.3.3",
-        "nedi/nedi": "*"
+        "nedi/nedi": "*",
+        "silex/silex": "v1.1.2"
     },
     "require-dev": {
         "phpunit/phpunit": "3.7.*"
