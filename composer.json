@@ -25,7 +25,9 @@
         "nedi/nedi": "*",
         "silex/silex": "v1.1.2",
         "monolog/monolog": "1.7.0",
-        "twig/twig": "*"
+        "twig/twig": "*",
+        "doctrine/dbal": "*",
+        "doctrine/orm": "2.4.2"
     },
     "require-dev": {
         "phpunit/phpunit": "3.7.*"

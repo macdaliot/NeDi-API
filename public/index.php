@@ -25,10 +25,15 @@ $app->register(
     )
 );
 
+$app->register(new \Silex\Provider\DoctrineServiceProvider());
+
+
+
 $app['controller.device'] = $app->share(function() { return new DeviceController(); });
 
 
-$app->get("/", function() {
+$app->get("/", function() use ($app) {
+        $app['monolog']->error("TEST");
         return "It works!";
     });
 
