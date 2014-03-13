@@ -36,3 +36,4 @@ $app->get("/device", "controller.device:get");
 $app->get("/device/{id}", "controller.device:getById");
 
 $app->run();
+
