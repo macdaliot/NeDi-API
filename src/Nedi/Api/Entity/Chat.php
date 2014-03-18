@@ -1,6 +1,6 @@
 <?php
 
-namespace NediApi\Entity;
+namespace Nedi\Api\Entity;
 
 
 use Doctrine\ORM\Mapping as ORM;
@@ -32,16 +32,17 @@ class Chat
     /**
      * @var string
      *
-     * @Column(name="usrname", type="string", length=32, nullable=true)
-     */
-    private $usrname = '';
-
-    /**
-     * @var string
-     *
      * @Column(name="message", type="string", length=255, nullable=true)
      */
     private $message = '';
+
+    /**
+     * @var User
+     *
+     * @ManyToOne(targetEntity="User")
+     * @JoinColumn(name="usrname", referencedColumnName="usrname")
+     */
+    private $user;
 
 
 }

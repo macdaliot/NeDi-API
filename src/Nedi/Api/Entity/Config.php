@@ -1,6 +1,6 @@
 <?php
 
-namespace NediApi\Entity;
+namespace Nedi\Api\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @Table(name="configs", uniqueConstraints={@UniqueConstraint(name="device", columns={"device"})})
  * @Entity
  */
-class Configs
+class Config
 {
     /**
      * @var string

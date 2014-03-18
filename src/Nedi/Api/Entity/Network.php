@@ -1,6 +1,6 @@
 <?php
 
-namespace NediApi\Entity;
+namespace Nedi\Api\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @Table(name="networks", indexes={@Index(name="device", columns={"device"}), @Index(name="ifname", columns={"ifname"}), @Index(name="ifip", columns={"ifip"})})
  * @Entity
  */
-class Networks
+class Network
 {
     /**
      * @var integer

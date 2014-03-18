@@ -1,7 +1,5 @@
 <?php
 
-use NediApi\Controller\DeviceController;
-
 define ("NEDI_API_APPLICATION_ROOT", realpath(__DIR__."/.."));
 
 require_once NEDI_API_APPLICATION_ROOT."/vendor/autoload.php";
@@ -29,16 +27,11 @@ $app->register(new \Silex\Provider\DoctrineServiceProvider());
 
 
 
-$app['controller.device'] = $app->share(function() { return new DeviceController(); });
 
 
 $app->get("/", function() use ($app) {
-        $app['monolog']->error("TEST");
         return "It works!";
     });
-
-$app->get("/device", "controller.device:get");
-$app->get("/device/{id}", "controller.device:getById");
 
 $app->run();
 

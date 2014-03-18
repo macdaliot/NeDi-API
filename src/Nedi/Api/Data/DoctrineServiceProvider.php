@@ -1,6 +1,6 @@
 <?php
 
-namespace NediApi\Data;
+namespace Nedi\Api\Data;
 
 
 use Doctrine\ORM\EntityManager;
@@ -23,7 +23,7 @@ class DoctrineServiceProvider implements ServiceProviderInterface
     {
         $app['doctrine.paths'] = $app->share(
             function () {
-                return array('NediApi\Entity' => NEDI_API_APPLICATION_ROOT . "/src/NediApi/Entity");
+                return array('Nedi\Api\Entity' => NEDI_API_APPLICATION_ROOT . "/src/Nedi/Api/Entity");
             }
         );
         $app['doctrine.configuration'] = $app->share(

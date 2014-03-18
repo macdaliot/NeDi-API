@@ -1,16 +1,16 @@
 <?php
 
-namespace NediApi\Entity;
+namespace Nedi\Api\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Users
+ * User
  *
  * @Table(name="users", uniqueConstraints={@UniqueConstraint(name="usrname", columns={"usrname"})})
  * @Entity
  */
-class Users
+class User
 {
     /**
      * @var string
@@ -19,7 +19,7 @@ class Users
      * @Id
      * @GeneratedValue(strategy="IDENTITY")
      */
-    private $usrname;
+    private $username;
 
     /**
      * @var string
