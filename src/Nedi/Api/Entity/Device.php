@@ -3,6 +3,7 @@
 namespace Nedi\Api\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Nedi\Common\Address\Ip;
 
 /**
  * Devices
@@ -19,14 +20,14 @@ class Device
      * @Id
      * @GeneratedValue(strategy="IDENTITY")
      */
-    private $device;
+    private $name;
 
     /**
      * @var integer
      *
      * @Column(name="devip", type="integer", nullable=true)
      */
-    private $devip = '0';
+    private $ip = '0';
 
     /**
      * @var string
@@ -251,6 +252,56 @@ class Device
      * @Column(name="cfgstatus", type="string", length=2, nullable=true)
      */
     private $cfgstatus = '--';
+
+    /**
+     * Returns the IP-Address from the Device
+     * @return string
+     */
+    public function getIp()
+    {
+        return Ip::fromLong($this->ip)->asString();
+    }
+
+    /**
+     * Sets the IP-Address for the Device
+     * @param string $deviceIp
+     */
+    public function setIp($deviceIp)
+    {
+        $this->ip = Ip::fromString($deviceIp)->asLong();
+    }
+
+    /**
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param string $deviceName
+     */
+    public function setName($deviceName)
+    {
+        $this->name = $deviceName;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSerial()
+    {
+        return $this->serial;
+    }
+
+    /**
+     * @param string $serial
+     */
+    public function setSerial($serial)
+    {
+        $this->serial = $serial;
+    }
 
 
 }
