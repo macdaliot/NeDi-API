@@ -9,7 +9,7 @@ use Nedi\Common\Address\Ip;
  * Devices
  *
  * @Table(name="devices", uniqueConstraints={@UniqueConstraint(name="device", columns={"device"})})
- * @Entity
+ * @Entity(repositoryClass="Nedi\Api\Repository\DeviceRepository")
  */
 class Device
 {
