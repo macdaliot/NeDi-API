@@ -3,7 +3,7 @@
     "description": "Rest-API for Nedi",
     "keywords": ["network", "discovery", "maps", "inventories"],
     "homepage": "https://nedi.ch",
-    "license": "GPLv3",
+    "license": "GPL-3.0+",
     "version": "0.1.0",
     "authors": [
         {
