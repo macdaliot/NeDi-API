@@ -23,6 +23,7 @@
     "require": {
         "php": ">=5.3.3",
         "nedi/nedi": "*",
+        "nedi/nedi-common": "*",
         "silex/silex": "v1.1.2",
         "monolog/monolog": "1.7.0",
         "twig/twig": "*",
