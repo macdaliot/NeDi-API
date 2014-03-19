@@ -2,6 +2,7 @@
 
 namespace Nedi\Api\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Nedi\Common\Address\Ip;
 
@@ -13,6 +14,12 @@ use Nedi\Common\Address\Ip;
  */
 class Device
 {
+    public function __construct()
+    {
+        $this->interfaces = new ArrayCollection();
+    }
+
+
     /**
      * @var string
      *
@@ -21,6 +28,13 @@ class Device
      * @GeneratedValue(strategy="IDENTITY")
      */
     private $name;
+
+    /**
+     * @var NetworkInterface[] | ArrayCollection
+     *
+     * @OneToMany(targetEntity="NetworkInterface", mappedBy="device")
+     */
+    private $interfaces;
 
     /**
      * @var integer
@@ -301,6 +315,14 @@ class Device
     public function setSerial($serial)
     {
         $this->serial = $serial;
+    }
+
+    /**
+     * @return ArrayCollection|NetworkInterface[]
+     */
+    public function getInterfaces()
+    {
+        return $this->interfaces;
     }
 
 

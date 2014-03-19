@@ -3,6 +3,7 @@
 namespace Nedi\Api\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Nedi\Api\ShortOutputArrayAccessable;
 
 /**
  * Interfaces
@@ -10,7 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @Table(name="interfaces", indexes={@Index(name="device", columns={"device"}), @Index(name="ifname", columns={"ifname"}), @Index(name="ifidx", columns={"ifidx"})})
  * @Entity
  */
-class NetworkInterface
+class NetworkInterface implements ShortOutputArrayAccessable
 {
     /**
      * @var integer
@@ -22,9 +23,10 @@ class NetworkInterface
     private $id;
 
     /**
-     * @var string
+     * @var Device
      *
-     * @Column(name="device", type="string", length=64, nullable=false)
+     * @ManyToOne(targetEntity="Device", fetch="LAZY")
+     * @JoinColumn(name="device", referencedColumnName="device")
      */
     private $device;
 
@@ -33,42 +35,50 @@ class NetworkInterface
      *
      * @Column(name="ifname", type="string", length=32, nullable=false)
      */
-    private $ifname;
+    private $name;
+
+    /**
+     * @param string $name
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+    }
 
     /**
      * @var integer
      *
      * @Column(name="ifidx", type="bigint", nullable=false)
      */
-    private $ifidx;
+    private $index;
 
     /**
      * @var string
      *
      * @Column(name="linktype", type="string", length=4, nullable=true)
      */
-    private $linktype = '';
+    private $linkType = '';
 
     /**
      * @var integer
      *
      * @Column(name="iftype", type="smallint", nullable=true)
      */
-    private $iftype = '0';
+    private $type = '0';
 
     /**
      * @var string
      *
      * @Column(name="ifmac", type="string", length=12, nullable=true)
      */
-    private $ifmac = '';
+    private $macAddress = '';
 
     /**
      * @var string
      *
      * @Column(name="ifdesc", type="string", length=255, nullable=true)
      */
-    private $ifdesc = '';
+    private $description = '';
 
     /**
      * @var string
@@ -82,7 +92,7 @@ class NetworkInterface
      *
      * @Column(name="ifstat", type="boolean", nullable=true)
      */
-    private $ifstat = '0';
+    private $status = '0';
 
     /**
      * @var integer
@@ -245,5 +255,81 @@ class NetworkInterface
      */
     private $macflood = '0';
 
+    /**
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
 
+    /**
+     * @return Device
+     */
+    public function getDevice()
+    {
+        return $this->device;
+    }
+
+    /**
+     * @return int
+     */
+    public function getIndex()
+    {
+        return $this->index;
+    }
+
+    /**
+     * @return string
+     */
+    public function getLinkType()
+    {
+        return $this->linkType;
+    }
+
+    /**
+     * @return string
+     */
+    public function getMacAddress()
+    {
+        return $this->macAddress;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
+     * @return string
+     */
+    public function getAlias()
+    {
+        return $this->alias;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function getStatus()
+    {
+        return $this->status;
+    }
+
+
+    /**
+     * @inheritdoc
+     */
+    public function asShortOutputArray()
+    {
+        return array(
+            'index' => $this->getIndex(),
+            'name' => $this->getName(),
+            'alias' => $this->getAlias(),
+            'description' => $this->getDescription(),
+        );
+    }
 }

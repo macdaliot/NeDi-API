@@ -23,11 +23,8 @@ $app->register(
     )
 );
 
-$app->register(new \Silex\Provider\DoctrineServiceProvider());
-
-
-
-
+$app->register(new \Nedi\Api\Data\DoctrineServiceProvider());
+$app->register(new \Nedi\Api\Device\DeviceServiceProvider());
 
 $app->get("/", function() use ($app) {
         return "It works!";
