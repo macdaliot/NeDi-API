@@ -35,11 +35,12 @@ class DeviceController
         foreach ($this->repository->findAll() as $device) {
             /** @var Device $device */
             $resource = new Hal(
-                "/device/" . urlencode($device->getName()), array(
-                'name' => $device->getName(),
-                'ip' => $device->getIp(),
-                'serial' => $device->getSerial()
-            )
+                $this->urlGenerator->generate("controller.device:get", array('device' => $device)),
+                array(
+                    'name' => $device->getName(),
+                    'ip' => $device->getIp(),
+                    'serial' => $device->getSerial()
+                )
             );
             $hal->addResource("device", $resource);
         }
@@ -56,14 +57,40 @@ class DeviceController
             $this->urlGenerator->generate("controller.device:get", array('device' => $device)),
             $deviceObject->asLongOutputArray()
         );
-        $hal->addLink('interfaces', $this->urlGenerator->generate("controller.device:getInterfaces", array('device' => $device)));
-        $hal->addLink('modules', $this->urlGenerator->generate("controller.device:getModules", array('device' => $device)));
-        $hal->addLink('events', $this->urlGenerator->generate("controller.device:getEvents", array('device' => $device)));
-        $hal->addLink('links', $this->urlGenerator->generate("controller.device:getLinks", array('device' => $device)));
-        $hal->addLink('nodes', $this->urlGenerator->generate("controller.device:getNodes", array('device' => $device)));
-        $hal->addLink('topology', $this->urlGenerator->generate("controller.device:getTopology", array('device' => $device)));
-        $hal->addLink('discover', $this->urlGenerator->generate("controller.device:discover", array('device' => $device)));
+        $hal->addLink(
+            'interfaces',
+            $this->urlGenerator->generate("controller.device:getInterfaces", array('device' => $device))
+        );
+        $hal->addLink(
+            'modules',
+            $this->urlGenerator->generate("controller.device:getModules", array('device' => $device))
+        );
+        $hal->addLink(
+            'events',
+            $this->urlGenerator->generate("controller.device:getEvents", array('device' => $device))
+        );
+        $hal->addLink(
+            'links',
+            $this->urlGenerator->generate("controller.device:getLinks", array('device' => $device))
+        );
+        $hal->addLink(
+            'nodes',
+            $this->urlGenerator->generate("controller.device:getNodes", array('device' => $device))
+        );
+        $hal->addLink(
+            'topology',
+            $this->urlGenerator->generate("controller.device:getTopology", array('device' => $device))
+        );
+        $hal->addLink(
+            'discover',
+            $this->urlGenerator->generate("controller.device:discover", array('device' => $device))
+        );
 
         return $hal->asJson();
+    }
+
+    public function getInterfaces($device)
+    {
+
     }
 }

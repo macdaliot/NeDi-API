@@ -23,6 +23,8 @@ class Device implements ShortOutputArrayAccessable, LongOutputArrayAccessable
         $this->networks = new ArrayCollection();
     }
 
+    #region Attributes
+
     /**
      * @var string
      *
@@ -89,9 +91,9 @@ class Device implements ShortOutputArrayAccessable, LongOutputArrayAccessable
     private $lastDiscovery = '0';
 
     /**
-     * @var boolean
+     * @var integer
      *
-     * @Column(name="services", type="boolean", nullable=true)
+     * @Column(name="services", type="integer", nullable=true)
      */
     private $services = '0';
 
@@ -138,9 +140,9 @@ class Device implements ShortOutputArrayAccessable, LongOutputArrayAccessable
     private $group = '';
 
     /**
-     * @var boolean
+     * @var integer
      *
-     * @Column(name="devmode", type="boolean", nullable=true)
+     * @Column(name="devmode", type="integer", nullable=true)
      */
     private $mode = '0';
 
@@ -187,9 +189,9 @@ class Device implements ShortOutputArrayAccessable, LongOutputArrayAccessable
     private $origip = '0';
 
     /**
-     * @var boolean
+     * @var integer
      *
-     * @Column(name="cpu", type="boolean", nullable=true)
+     * @Column(name="cpu", type="integer", nullable=true)
      */
     private $cpu = '0';
 
@@ -201,9 +203,9 @@ class Device implements ShortOutputArrayAccessable, LongOutputArrayAccessable
     private $memCpu = '0';
 
     /**
-     * @var boolean
+     * @var integer
      *
-     * @Column(name="temp", type="boolean", nullable=true)
+     * @Column(name="temp", type="integer", nullable=true)
      */
     private $temp = '0';
 
@@ -243,16 +245,16 @@ class Device implements ShortOutputArrayAccessable, LongOutputArrayAccessable
     private $options = '';
 
     /**
-     * @var boolean
+     * @var integer
      *
-     * @Column(name="size", type="boolean", nullable=true)
+     * @Column(name="size", type="integer", nullable=true)
      */
     private $size = '0';
 
     /**
-     * @var boolean
+     * @var integer
      *
-     * @Column(name="stack", type="boolean", nullable=true)
+     * @Column(name="stack", type="integer", nullable=true)
      */
     private $stack = '1';
 
@@ -283,6 +285,26 @@ class Device implements ShortOutputArrayAccessable, LongOutputArrayAccessable
      * @Column(name="cfgstatus", type="string", length=2, nullable=true)
      */
     private $configurationStatus = '--';
+
+    #endregion Attributes
+
+    #region Getter & Setter
+
+    /**
+     * @return string
+     */
+    public function getType()
+    {
+        return $this->type;
+    }
+
+    /**
+     * @param string $type
+     */
+    public function setType($type)
+    {
+        $this->type = $type;
+    }
 
     /**
      * @return int
@@ -333,7 +355,7 @@ class Device implements ShortOutputArrayAccessable, LongOutputArrayAccessable
     }
 
     /**
-     * @return boolean
+     * @return integer
      */
     public function getServices()
     {
@@ -341,7 +363,7 @@ class Device implements ShortOutputArrayAccessable, LongOutputArrayAccessable
     }
 
     /**
-     * @param boolean $services
+     * @param integer $services
      */
     public function setServices($services)
     {
@@ -349,7 +371,7 @@ class Device implements ShortOutputArrayAccessable, LongOutputArrayAccessable
     }
 
     /**
-     * @return boolean
+     * @return integer
      */
     public function getSize()
     {
@@ -357,7 +379,7 @@ class Device implements ShortOutputArrayAccessable, LongOutputArrayAccessable
     }
 
     /**
-     * @param boolean $size
+     * @param integer $size
      */
     public function setSize($size)
     {
@@ -493,7 +515,7 @@ class Device implements ShortOutputArrayAccessable, LongOutputArrayAccessable
     }
 
     /**
-     * @return boolean
+     * @return integer
      */
     public function getCpu()
     {
@@ -501,7 +523,7 @@ class Device implements ShortOutputArrayAccessable, LongOutputArrayAccessable
     }
 
     /**
-     * @param boolean $cpu
+     * @param integer $cpu
      */
     public function setCpu($cpu)
     {
@@ -685,7 +707,7 @@ class Device implements ShortOutputArrayAccessable, LongOutputArrayAccessable
     }
 
     /**
-     * @return boolean
+     * @return integer
      */
     public function getMode()
     {
@@ -693,7 +715,7 @@ class Device implements ShortOutputArrayAccessable, LongOutputArrayAccessable
     }
 
     /**
-     * @param boolean $mode
+     * @param integer $mode
      */
     public function setMode($mode)
     {
@@ -805,7 +827,7 @@ class Device implements ShortOutputArrayAccessable, LongOutputArrayAccessable
     {
         return $this->networks;
     }
-
+    #endregion Getter & Setter
 
     /**
      * @return array
@@ -818,6 +840,34 @@ class Device implements ShortOutputArrayAccessable, LongOutputArrayAccessable
             'maximal' => $this->getMaximalPoe(),
         );
 
+        $result['cliPort'] = $this->getCliPort();
+        $result['discovery'] = array(
+            'first' => $this->getFirstDiscovery(),
+            'last' => $this->getLastDiscovery(),
+        );
+        $result['hasServices'] = $this->getServices();
+        $result['operatingSystem'] = $this->getOperatingSystem();
+        $result['bootImage'] = $this->getBootImage();
+        $result['mode'] = $this->getMode();
+        $result['login'] = $this->getLogin();
+        $result['options'] = $this->getOptions();
+        $result['snmp'] = array(
+            'sysObjectId' => $this->getSysObjectId(),
+            'version' => $this->getSnmpVersion(),
+            'writeCommunity' => $this->getWriteCommunity(),
+            'readCommunity' => $this->getReadCommunity(),
+        );
+        $result['size'] = $this->getSize();
+        $result['stack'] = $this->getStack();
+
+        $result['custom'] = array(
+            'value' => $this->getCustomValue(),
+            'label' => $this->getCustomLabel(),
+        );
+        $result['environmental'] = array(
+            'cpu' => $this->getCpu(),
+            'memCpu' => $this->getMemCpu(),
+        );
         return $result;
     }
 
@@ -828,26 +878,16 @@ class Device implements ShortOutputArrayAccessable, LongOutputArrayAccessable
     {
         return array(
             'name' => $this->getName(),
+            'description' => $this->getDescription(),
             'serial' => $this->getSerial(),
             'ip' => $this->getIp(),
             'sysObjectId' => $this->getSysObjectId(),
             'contact' => $this->getContact(),
+            'icon' => $this->getIcon(),
+            'type' => $this->getType(),
+            'group' => $this->getGroup(),
+            'location' => $this->getLocation(),
         );
     }
 
-    /**
-     * @return string
-     */
-    public function getType()
-    {
-        return $this->type;
-    }
-
-    /**
-     * @param string $type
-     */
-    public function setType($type)
-    {
-        $this->type = $type;
-    }
 }
