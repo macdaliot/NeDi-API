@@ -25,6 +25,7 @@ $app->register(
 
 $app->register(new \Nedi\Api\Data\DoctrineServiceProvider());
 $app->register(new \Nedi\Api\Device\DeviceServiceProvider());
+$app->register(new \Silex\Provider\UrlGeneratorServiceProvider());
 
 $app->get("/", function() use ($app) {
         return "It works!";

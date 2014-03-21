@@ -33,10 +33,10 @@ class Network implements ShortOutputArrayAccessable
     /**
      * @var NetworkInterface
      *
-     * @OneToMany(targetEntity="NetworkInterface", fetch="LAZY", inversedBy="nodes")
-     * @JoinColumns({
-     *          @JoinColumn(name="ifname", referencedColumnName="ifname"),
-     *          @JoinColumn(name="device", referencedColumnName="device")
+     * @--OneToMany(targetEntity="NetworkInterface", fetch="LAZY", inversedBy="nodes")
+     * @--JoinColumns({
+     *          @--JoinColumn(name="ifname", referencedColumnName="ifname"),
+     *          @--JoinColumn(name="device", referencedColumnName="device")
      * })
      */
     private $interfaces;
