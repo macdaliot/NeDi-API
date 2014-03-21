@@ -17,8 +17,9 @@ class Device
     public function __construct()
     {
         $this->interfaces = new ArrayCollection();
+        $this->nodes = new ArrayCollection();
+        $this->networks = new ArrayCollection();
     }
-
 
     /**
      * @var string
@@ -35,6 +36,20 @@ class Device
      * @OneToMany(targetEntity="NetworkInterface", mappedBy="device")
      */
     private $interfaces;
+
+    /**
+     * @var Node[] | ArrayCollection
+     *
+     * @OneToMany(targetEntity="Node", mappedBy="device")
+     */
+    private $nodes;
+
+    /**
+     * @var Network[] | ArrayCollection
+     *
+     * @OneToMany(targetEntity="Network", mappedBy="device")
+     */
+    private $networks;
 
     /**
      * @var integer
@@ -323,6 +338,22 @@ class Device
     public function getInterfaces()
     {
         return $this->interfaces;
+    }
+
+    /**
+     * @return ArrayCollection|Node[]
+     */
+    public function getNodes()
+    {
+        return $this->nodes;
+    }
+
+    /**
+     * @return ArrayCollection|Network[]
+     */
+    public function getNetworks()
+    {
+        return $this->networks;
     }
 
 

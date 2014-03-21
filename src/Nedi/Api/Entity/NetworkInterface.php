@@ -14,25 +14,23 @@ use Nedi\Api\ShortOutputArrayAccessable;
 class NetworkInterface implements ShortOutputArrayAccessable
 {
     /**
-     * @var integer
-     *
-     * @Column(name="id", type="integer", nullable=false)
-     * @Id
-     * @GeneratedValue(strategy="IDENTITY")
-     */
-    private $id;
-
-    /**
      * @var Device
-     *
+     * @Id
      * @ManyToOne(targetEntity="Device", fetch="LAZY")
      * @JoinColumn(name="device", referencedColumnName="device")
      */
     private $device;
 
     /**
-     * @var string
+     * @var Node[] | ArrayCollection
      *
+     * @OneToMany(targetEntity="Node", mappedBy="interface")
+     */
+    private $nodes;
+
+    /**
+     * @var string
+     * @Id
      * @Column(name="ifname", type="string", length=32, nullable=false)
      */
     private $name;
@@ -332,4 +330,6 @@ class NetworkInterface implements ShortOutputArrayAccessable
             'description' => $this->getDescription(),
         );
     }
+
+
 }

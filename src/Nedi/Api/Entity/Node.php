@@ -3,6 +3,7 @@
 namespace Nedi\Api\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Nedi\Api\ShortOutputArrayAccessable;
 
 /**
  * Nodes
@@ -10,7 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @Table(name="nodes", indexes={@Index(name="name", columns={"name"}), @Index(name="nodip", columns={"nodip"}), @Index(name="mac", columns={"mac"}), @Index(name="vlanid", columns={"vlanid"}), @Index(name="device", columns={"device"})})
  * @Entity
  */
-class Nodes
+class Node implements ShortOutputArrayAccessable
 {
     /**
      * @var integer
@@ -33,14 +34,14 @@ class Nodes
      *
      * @Column(name="nodip", type="integer", nullable=true)
      */
-    private $nodip = '0';
+    private $ip = '0';
 
     /**
      * @var string
      *
      * @Column(name="mac", type="string", length=16, nullable=false)
      */
-    private $mac;
+    private $macAddress;
 
     /**
      * @var string
@@ -64,18 +65,23 @@ class Nodes
     private $lastseen = '0';
 
     /**
-     * @var string
+     * @var Device
      *
-     * @Column(name="device", type="string", length=64, nullable=true)
+     * @ManyToOne(targetEntity="Device", fetch="LAZY", inversedBy="nodes")
+     * @JoinColumn(name="device", referencedColumnName="device")
      */
-    private $device = '';
+    private $device;
 
     /**
-     * @var string
+     * @var NetworkInterface
      *
-     * @Column(name="ifname", type="string", length=32, nullable=true)
+     * @ManyToOne(targetEntity="NetworkInterface", fetch="LAZY", inversedBy="nodes")
+     * @JoinColumns({
+     *          @JoinColumn(name="ifname", referencedColumnName="ifname"),
+     *          @JoinColumn(name="device", referencedColumnName="device")
+     * })
      */
-    private $ifname = '';
+    private $interface;
 
     /**
      * @var integer
@@ -183,4 +189,30 @@ class Nodes
     private $noduser = '';
 
 
+    /**
+     * @return array
+     */
+    public function asShortOutputArray()
+    {
+        return array(
+            'id' => $this->id,
+            'name' => $this->getName(),
+        );
+    }
+
+    /**
+     * @param string $name
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+    }
+
+    /**
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
 }

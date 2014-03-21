@@ -46,7 +46,7 @@ class DeviceController
         /** @var Device $device */
         $device = $this->repository->find($device);
         $data = array();
-        foreach($device->getInterfaces() as $interface) {
+        foreach($device->getNetworks() as $interface) {
             $data[] = $interface->asShortOutputArray();
         }
         return new JsonResponse($data);

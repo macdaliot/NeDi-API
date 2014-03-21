@@ -3,6 +3,7 @@
 namespace Nedi\Api\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Nedi\Api\ShortOutputArrayAccessable;
 
 /**
  * Networks
@@ -10,7 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @Table(name="networks", indexes={@Index(name="device", columns={"device"}), @Index(name="ifname", columns={"ifname"}), @Index(name="ifip", columns={"ifip"})})
  * @Entity
  */
-class Network
+class Network implements ShortOutputArrayAccessable
 {
     /**
      * @var integer
@@ -22,18 +23,23 @@ class Network
     private $id;
 
     /**
-     * @var string
+     * @var Device
      *
-     * @Column(name="device", type="string", length=64, nullable=false)
+     * @ManyToOne(targetEntity="Device", fetch="LAZY")
+     * @JoinColumn(name="device", referencedColumnName="device")
      */
     private $device;
 
     /**
-     * @var string
+     * @var NetworkInterface
      *
-     * @Column(name="ifname", type="string", length=32, nullable=true)
+     * @OneToMany(targetEntity="NetworkInterface", fetch="LAZY", inversedBy="nodes")
+     * @JoinColumns({
+     *          @JoinColumn(name="ifname", referencedColumnName="ifname"),
+     *          @JoinColumn(name="device", referencedColumnName="device")
+     * })
      */
-    private $ifname = '';
+    private $interfaces;
 
     /**
      * @var integer
@@ -71,4 +77,11 @@ class Network
     private $status = '0';
 
 
+    /**
+     * @return array
+     */
+    public function asShortOutputArray()
+    {
+        return array();
+    }
 }
