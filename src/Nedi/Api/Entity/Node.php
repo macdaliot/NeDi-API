@@ -194,6 +194,7 @@ class Node implements ShortOutputArrayAccessable
      */
     public function asShortOutputArray()
     {
+
         return array(
             'id' => $this->id,
             'name' => $this->getName(),
