@@ -25,11 +25,12 @@ $app->register(
 
 $app->register(new \Nedi\Api\Data\DoctrineServiceProvider());
 $app->register(new \Nedi\Api\Device\DeviceServiceProvider());
+$app->register(new \Nedi\Api\NetworkInterface\NetworkInterfaceServiceProvider());
 $app->register(new \Silex\Provider\UrlGeneratorServiceProvider());
 
 $app->get("/", function() use ($app) {
-        return "It works!";
-    });
+        return new \Nedi\Api\ApiHalResponse($app['url_generator']);
+    })->bind("controller.root");
 
 $app->run();
 

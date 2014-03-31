@@ -21,6 +21,7 @@ class Device implements ShortOutputArrayAccessable, LongOutputArrayAccessable
         $this->interfaces = new ArrayCollection();
         $this->nodes = new ArrayCollection();
         $this->networks = new ArrayCollection();
+        $this->events = new ArrayCollection();
     }
 
     #region Attributes
@@ -40,6 +41,13 @@ class Device implements ShortOutputArrayAccessable, LongOutputArrayAccessable
      * @OneToMany(targetEntity="NetworkInterface", mappedBy="device")
      */
     private $interfaces;
+
+    /**
+     * @var Event[] | ArrayCollection
+     *
+     * @OneToMany(targetEntity="Event", mappedBy="device")
+     */
+    private $events;
 
     /**
      * @var Node[] | ArrayCollection
@@ -888,6 +896,11 @@ class Device implements ShortOutputArrayAccessable, LongOutputArrayAccessable
             'group' => $this->getGroup(),
             'location' => $this->getLocation(),
         );
+    }
+
+    public function getEvents()
+    {
+        return $this->events;
     }
 
 }

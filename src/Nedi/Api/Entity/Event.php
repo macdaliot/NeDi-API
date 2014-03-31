@@ -3,6 +3,7 @@
 namespace Nedi\Api\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Nedi\Api\LongOutputArrayAccessable;
 
 /**
  * Events
@@ -10,7 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @Table(name="events", indexes={@Index(name="source", columns={"source"}), @Index(name="level", columns={"level"}), @Index(name="time", columns={"time"}), @Index(name="class", columns={"class"}), @Index(name="device", columns={"device"})})
  * @Entity
  */
-class Events
+class Event implements LongOutputArrayAccessable
 {
     /**
      * @var integer
@@ -57,11 +58,33 @@ class Events
     private $class = 'dev';
 
     /**
-     * @var string
-     *
-     * @Column(name="device", type="string", length=64, nullable=true)
+     * @var Device
+     * @ManyToOne(targetEntity="Device", fetch="LAZY")
+     * @JoinColumn(name="device", referencedColumnName="device")
      */
-    private $device = '';
+    private $device;
 
 
+    /**
+     * @return array
+     */
+    public function asLongOutputArray()
+    {
+        return array(
+            'id' => $this->id,
+            'level' => $this->level,
+            'time' => $this->time,
+            'source' => $this->source,
+            'info' => $this->info,
+            'class' => $this->class
+        );
+    }
+
+    /**
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
 }
